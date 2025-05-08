@@ -9,6 +9,7 @@ if triton.__version__[0] == '3':
         triton.__path__[0] + "/backends/amd/driver.py",
         triton.__path__[0] + "/backends/nvidia/driver.py",
         triton.__path__[0] + "/backends/driver.py",
+        triton.__path__[0] + "/runtime/autotuner.py",
     ]
 elif triton.__version__[0:3] == '2.3':
     files = [
@@ -29,12 +30,13 @@ def make_triton_compatible_with_paddle():
                 new_all_lines.append(line)
         with open(link_file, 'w') as f:
             f.writelines(new_all_lines)
-    
-    has_add_patch = False
+
     for file in files:
+        has_add_patch = False
         new_all_lines = []
         with open(file, 'r') as f:
             for line in f.readlines():
+
                 if ("import use_triton_in_paddle as torch" in line):
                     has_add_patch = True
                 if ("import torch" in line):
@@ -43,8 +45,7 @@ def make_triton_compatible_with_paddle():
                     copy2_line = line
                     copy3_line = line
                     copy4_line = line
-                    
-                    
+
                     copy0_line = copy0_line.replace("import torch", "try:")
                     copy1_line = copy1_line.replace("import torch", "\timport torch")
                     copy2_line = copy2_line.replace("import torch", "except:")
