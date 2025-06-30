@@ -9,7 +9,7 @@ if triton.__version__[0] == '3':
         triton.__path__[0] + "/backends/amd/driver.py",
         triton.__path__[0] + "/backends/nvidia/driver.py",
         triton.__path__[0] + "/backends/driver.py",
-        triton.__path__[0] + "/runtime/autotuner.py",
+        # triton.__path__[0] + "/runtime/autotuner.py",
     ]
 elif triton.__version__[0:3] == '2.3':
     files = [
